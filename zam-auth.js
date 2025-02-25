@@ -11,7 +11,7 @@ class ZAMAuth {
         window.localStorage.setItem("zam-token", value);
     }
 
-    async auth(username, password, callback) {
+    async auth(username, password, doSet, callback) {
         const response = await fetch(this.server + "/auth", {
             headers: {
                 "Content-Type": "application/json"
@@ -24,9 +24,7 @@ class ZAMAuth {
         });
 
         let data = await response.json();
-        console.log(data);
-
-        if(data.success) {
+        if(data.success && doSet == true) {
             this.setToken(data.message);
         }
 
@@ -53,8 +51,6 @@ class ZAMAuth {
         });
 
         let data = await response.json();
-        console.log(data);
-
         if(!data.success) {
             this.clearToken();
         }
