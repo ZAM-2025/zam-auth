@@ -1,4 +1,16 @@
 class ZAMAuth {
+    getToken() {
+        window.localStorage.getItem("zam-token");
+    }
+    
+    clearToken() {
+        window.localStorage.removeItem("zam-token");
+    }
+
+    setToken(value) {
+        window.localStorage.setItem("zam-token", value);
+    }
+
     async auth(username, password, callback) {
         const response = await fetch(this.server + "/auth", {
             headers: {
@@ -15,14 +27,16 @@ class ZAMAuth {
         console.log(data);
 
         if(data.success) {
-            window.localStorage.setItem("zam-token", data.message);
+            this.setToken(data.message);
         }
 
-        callback(data);
+        if(callback != undefined && callback != null) {
+            callback(data);
+        }
     }
 
     async authToken(callback) {
-        let token = window.localStorage.getItem("zam-token")
+        let token = this.getToken();
 
         if(token == null) {
             return;
@@ -42,10 +56,12 @@ class ZAMAuth {
         console.log(data);
 
         if(!data.success) {
-            window.localStorage.removeItem("zam-token");
+            this.clearToken();
         }
 
-        callback(data);
+        if(callback != undefined && callback != null) {
+            callback(data);
+        }
     }
 
     constructor(server) {
