@@ -1,14 +1,14 @@
 class ZAMAuth {
     getToken() {
-        window.localStorage.getItem("zam-token");
+        return window.localStorage.getItem("zam-token");
     }
     
     clearToken() {
-        window.localStorage.removeItem("zam-token");
+        return window.localStorage.removeItem("zam-token");
     }
 
     setToken(value) {
-        window.localStorage.setItem("zam-token", value);
+        return window.localStorage.setItem("zam-token", value);
     }
 
     async auth(username, password, doSet, callback) {
@@ -37,10 +37,64 @@ class ZAMAuth {
         let token = this.getToken();
 
         if(token == null) {
-            return;
+            return false;
         }
 
         const response = await fetch(this.server + "/authToken", {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "POST",
+            body: JSON.stringify({
+                "token": token
+            })
+        });
+
+        let data = await response.json();
+        if(!data.success) {
+            this.clearToken();
+        }
+
+        if(callback != undefined && callback != null) {
+            callback(data);
+        }
+    }
+
+    async logout(callback) {
+        let token = this.getToken();
+
+        if(token == null) {
+            return false;
+        }
+
+        const response = await fetch(this.server + "/logout", {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "POST",
+            body: JSON.stringify({
+                "token": token
+            })
+        });
+
+        let data = await response.json();
+        if(data.success) {
+            this.clearToken();
+        }
+
+        if(callback != undefined && callback != null) {
+            callback(data);
+        }
+    }
+
+    async getUserInfo(callback) {
+        let token = this.getToken();
+
+        if(token == null) {
+            return false;
+        }
+
+        const response = await fetch(this.server + "/getUserInfo", {
             headers: {
                 "Content-Type": "application/json"
             },
