@@ -1,4 +1,4 @@
-class ZAMAuth {    
+class ZAMAuth {
     getToken() {
         return window.localStorage.getItem("zam-token");
     }
