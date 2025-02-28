@@ -1,4 +1,4 @@
-class ZAMAuth {
+class ZAMAuth {    
     getToken() {
         return window.localStorage.getItem("zam-token");
     }
@@ -12,7 +12,7 @@ class ZAMAuth {
     }
 
     async auth(username, password, doSet, callback) {
-        const response = await fetch(this.server + "/auth", {
+        const response = await fetch(this.server + "/api/user/auth", {
             headers: {
                 "Content-Type": "application/json"
             },
@@ -40,7 +40,7 @@ class ZAMAuth {
             return false;
         }
 
-        const response = await fetch(this.server + "/authToken", {
+        const response = await fetch(this.server + "/api/user/token", {
             headers: {
                 "Content-Type": "application/json"
             },
@@ -67,7 +67,7 @@ class ZAMAuth {
             return false;
         }
 
-        const response = await fetch(this.server + "/logout", {
+        const response = await fetch(this.server + "/api/user/logout", {
             headers: {
                 "Content-Type": "application/json"
             },
@@ -94,7 +94,7 @@ class ZAMAuth {
             return false;
         }
 
-        const response = await fetch(this.server + "/getUserInfo", {
+        const response = await fetch(this.server + "/api/user/info", {
             headers: {
                 "Content-Type": "application/json"
             },
