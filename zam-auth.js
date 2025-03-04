@@ -113,6 +113,39 @@ class ZAMAuth {
             callback(data);
         }
     }
+    
+    async getAllAssets(callback) {
+        const response = await fetch(this.server + "/api/assets/all", {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "POST"
+        });
+
+        let data = await response.json();
+
+        if(callback != undefined && callback != null) {
+            callback(data);
+        }
+    }
+
+    async getFloorAssets(floor, callback) {
+        const response = await fetch(this.server + "/api/assets/floor", {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "POST",
+            body: JSON.stringify({
+                "floor": floor
+            })
+        });
+
+        let data = await response.json();
+
+        if(callback != undefined && callback != null) {
+            callback(data);
+        }
+    }
 
     constructor(server) {
         this.server = server;
