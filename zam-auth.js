@@ -1,3 +1,9 @@
+let ZAMUserType = {
+    DIPENDENTE: "DIPENDENTE",
+    COORDINATORE: "COORDINATORE",
+    GESTORE: "GESTORE"
+}
+
 class ZAMAuth {
     getToken() {
         return window.localStorage.getItem("zam-token");
