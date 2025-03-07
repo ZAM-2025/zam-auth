@@ -153,7 +153,29 @@ class ZAMAuth {
         }
     }
 
+    async getBookingsByAsset(id, callback) {
+        const response = await fetch(this.server + "/api/booking/asset", {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "POST",
+            body: JSON.stringify({
+                "id": id
+            })
+        });
+
+        let data = await response.json();
+
+        if(callback != undefined && callback != null) {
+            callback(data);
+        }
+    }
+
     constructor(server) {
-        this.server = server;
+        if(server == null || server == undefined) {
+            this.server = "http://localhost:8080";
+        } else {
+            this.server = server;
+        }
     }
 }

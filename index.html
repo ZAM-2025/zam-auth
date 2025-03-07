@@ -12,7 +12,7 @@
         let username = data.target.username.value;
         let password = data.target.password.value;
 
-        var auth = new ZAMAuth("http://localhost:8080");
+        var auth = new ZAMAuth();;
         auth.auth(username, password, (data) => {
             if(data.success) {
                 console.log("yay!");
@@ -41,7 +41,7 @@
             var button = document.createElement("button");
             button.innerText = "Prova token";
             button.onclick = () => {
-                var auth = new ZAMAuth("http://localhost:8080");
+                var auth = new ZAMAuth();;
                 auth.authToken((data) => {
                     console.log("yay!");
                                 
