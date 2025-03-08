@@ -173,7 +173,7 @@ class ZAMAuth {
 
     constructor(server) {
         if(server == null || server == undefined) {
-            this.server = "http://localhost:8080";
+            this.server = "http://lab.matthew5pl.net:7906";
         } else {
             this.server = server;
         }
