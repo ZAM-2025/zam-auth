@@ -192,9 +192,6 @@ class ZAMAuth {
         });
 
         let data = await response.json();
-        if(!data.success) {
-            this.clearToken();
-        }
 
         if(callback != undefined && callback != null) {
             callback(data);
