@@ -17,7 +17,7 @@ class ZAMAuth {
         return window.localStorage.setItem("zam-token", value);
     }
 
-    async auth(username, password, doSet, callback) {
+    async auth(username, password, captchaID, doSet, callback) {
         const response = await fetch(this.server + "/api/user/auth", {
             headers: {
                 "Content-Type": "application/json"
@@ -25,7 +25,8 @@ class ZAMAuth {
             method: "POST",
             body: JSON.stringify({
                 "username": username,
-                "password": password
+                "password": password,
+                "captchaID": captchaID
             })
         });
 
