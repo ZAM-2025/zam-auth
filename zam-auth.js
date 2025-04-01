@@ -276,6 +276,7 @@ class ZAMAuth {
     }
 
     constructor(server) {
+        // Per ora usiamo questo server
         if(server == null || server == undefined) {
             if(Helpers.isDebug()) {
                 this.server = "http://localhost:8080";
