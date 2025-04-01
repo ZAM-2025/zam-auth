@@ -248,9 +248,40 @@ class ZAMAuth {
         }
     }
 
+    async editBooking(bookingID, start, end, callback) {
+        let token = this.getToken();
+
+        if(token == null) {
+            return false;
+        }
+
+        const response = await fetch(this.server + "/api/booking/edit", {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "POST",
+            body: JSON.stringify({
+                "token": token,
+                "bookingID": bookingID,
+                "start": start,
+                "end": end
+            })
+        });
+
+        let data = await response.json();
+
+        if(callback != undefined && callback != null) {
+            callback(data);
+        }
+    }
+
     constructor(server) {
         if(server == null || server == undefined) {
-            this.server = "http://localhost:8080";
+            if(Helpers.isDebug()) {
+                this.server = "http://localhost:8080";
+            } else {
+                this.server = "http://lab.matthew5pl.net:9091";
+            }
         } else {
             this.server = server;
         }
