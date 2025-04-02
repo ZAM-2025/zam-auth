@@ -4,6 +4,12 @@ let ZAMUserType = {
     GESTORE: "GESTORE"
 }
 
+let ZAMUserTypeInt = {
+    DIPENDENTE: 0,
+    COORDINATORE: 1,
+    GESTORE: 2
+}
+
 class ZAMAuth {
     getToken() {
         return window.localStorage.getItem("zam-token");
@@ -115,6 +121,61 @@ class ZAMAuth {
         if(!data.success) {
             this.clearToken();
         }
+
+        if(callback != undefined && callback != null) {
+            callback(data);
+        }
+    }
+
+    async newUser(username, password, nome, cognome, type, coord, callback) {
+        let token = this.getToken();
+
+        if(token == null) {
+            return false;
+        }
+
+        const response = await fetch(this.server + "/api/user/new", {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "POST",
+            body: JSON.stringify({
+                "token": token,
+                "username": username,
+                "password": password,
+                "nome": nome,
+                "cognome": cognome,
+                "type": type,
+                "coord": coord
+            })
+        });
+
+        let data = await response.json();
+
+        if(callback != undefined && callback != null) {
+            callback(data);
+        }
+    }
+
+    async getUserInfoByType(type, callback) {
+        let token = this.getToken();
+
+        if(token == null) {
+            return false;
+        }
+
+        const response = await fetch(this.server + "/api/user/type", {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "POST",
+            body: JSON.stringify({
+                "token": token,
+                "type": type
+            })
+        });
+
+        let data = await response.json();
 
         if(callback != undefined && callback != null) {
             callback(data);
