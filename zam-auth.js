@@ -4,12 +4,6 @@ let ZAMUserType = {
     GESTORE: "GESTORE"
 }
 
-let ZAMUserTypeInt = {
-    DIPENDENTE: 0,
-    COORDINATORE: 1,
-    GESTORE: 2
-}
-
 class ZAMAuth {
     getToken() {
         return window.localStorage.getItem("zam-token");
@@ -299,6 +293,31 @@ class ZAMAuth {
             body: JSON.stringify({
                 "token": token,
                 "bookingID": bookingID
+            })
+        });
+
+        let data = await response.json();
+
+        if(callback != undefined && callback != null) {
+            callback(data);
+        }
+    }
+
+    async deleteUser(userID, callback) {
+        let token = this.getToken();
+
+        if(token == null) {
+            return false;
+        }
+
+        const response = await fetch(this.server + "/api/user/delete", {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "POST",
+            body: JSON.stringify({
+                "token": token,
+                "userID": userID
             })
         });
 
