@@ -151,6 +151,37 @@ class ZAMAuth {
         }
     }
 
+    async editUser(username, id, password, nome, cognome, type, coord, callback) {
+        let token = this.getToken();
+
+        if(token == null) {
+            return false;
+        }
+
+        const response = await fetch(this.server + "/api/user/edit", {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "POST",
+            body: JSON.stringify({
+                "token": token,
+                "id": id,
+                "username": username,
+                "password": password,
+                "nome": nome,
+                "cognome": cognome,
+                "type": type,
+                "coord": coord
+            })
+        });
+
+        let data = await response.json();
+
+        if(callback != undefined && callback != null) {
+            callback(data);
+        }
+    }
+
     async getUserInfoByType(type, callback) {
         let token = this.getToken();
 
