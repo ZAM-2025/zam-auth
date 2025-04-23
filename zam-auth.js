@@ -222,6 +222,21 @@ class ZAMAuth {
         }
     }
 
+    async getActiveAssets(callback) {
+        const response = await fetch(this.server + "/api/assets/active", {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "POST"
+        });
+
+        let data = await response.json();
+
+        if(callback != undefined && callback != null) {
+            callback(data);
+        }
+    }
+
     async getFloorAssets(floor, callback) {
         const response = await fetch(this.server + "/api/assets/floor", {
             headers: {
@@ -239,6 +254,24 @@ class ZAMAuth {
             callback(data);
         }
     }
+
+    async getActiveFloorAssets(floor, callback) {
+        const response = await fetch(this.server + "/api/assets/floor-active", {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "POST",
+            body: JSON.stringify({
+                "floor": floor
+            })
+        });
+
+        let data = await response.json();
+
+        if(callback != undefined && callback != null) {
+            callback(data);
+        }
+    } 
 
     async getBookingsByAsset(id, callback) {
         const response = await fetch(this.server + "/api/booking/asset", {
