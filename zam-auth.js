@@ -438,7 +438,7 @@ class ZAMAuth {
         // Per ora usiamo questo server
         if(server == null || server == undefined) {
             if(Helpers.isDebug()) {
-                this.server = "http://localhost:8080";
+                this.server = "http://" + window.location.hostname + ":8080";
             } else {
                 this.server = "http://lab.matthew5pl.net:9091";
             }
