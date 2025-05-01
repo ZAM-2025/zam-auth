@@ -342,6 +342,31 @@ class ZAMAuth {
         }
     }
 
+    async getBookedBy(userID, callback) {
+        let token = this.getToken();
+
+        if(token == null) {
+            return false;
+        }
+
+        const response = await fetch(this.server + "/api/booking/bookedby", {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "POST",
+            body: JSON.stringify({
+                "token": token,
+                "userID": userID
+            })
+        });
+
+        let data = await response.json();
+
+        if(callback != undefined && callback != null) {
+            callback(data);
+        }
+    }
+
     async getActiveBookings(callback) {
         let token = this.getToken();
 
@@ -366,6 +391,31 @@ class ZAMAuth {
         }
     }
 
+    async getActiveBookingsBy(userID, callback) {
+        let token = this.getToken();
+
+        if(token == null) {
+            return false;
+        }
+
+        const response = await fetch(this.server + "/api/booking/activeby", {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "POST",
+            body: JSON.stringify({
+                "token": token,
+                "userID": userID
+            })
+        });
+
+        let data = await response.json();
+
+        if(callback != undefined && callback != null) {
+            callback(data);
+        }
+    }
+
     async getInactiveBookings(callback) {
         let token = this.getToken();
 
@@ -380,6 +430,31 @@ class ZAMAuth {
             method: "POST",
             body: JSON.stringify({
                 "token": token
+            })
+        });
+
+        let data = await response.json();
+
+        if(callback != undefined && callback != null) {
+            callback(data);
+        }
+    }
+
+    async getInactiveBookingsBy(userID, callback) {
+        let token = this.getToken();
+
+        if(token == null) {
+            return false;
+        }
+
+        const response = await fetch(this.server + "/api/booking/inactiveby", {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "POST",
+            body: JSON.stringify({
+                "token": token,
+                "userID": userID
             })
         });
 
