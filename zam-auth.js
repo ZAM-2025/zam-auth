@@ -318,6 +318,31 @@ class ZAMAuth {
         }
     }
 
+    async getByAssetCoord(assetID, callback) {
+        let token = this.getToken();
+
+        if(token == null) {
+            return false;
+        }
+
+        const response = await fetch(this.server + "/api/booking/assetfor", {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "POST",
+            body: JSON.stringify({
+                "token": token,
+                "assetID": assetID
+            })
+        });
+
+        let data = await response.json();
+
+        if(callback != undefined && callback != null) {
+            callback(data);
+        }
+    }
+
     async getBooked(callback) {
         let token = this.getToken();
 
