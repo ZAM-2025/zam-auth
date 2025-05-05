@@ -515,6 +515,31 @@ class ZAMAuth {
         }
     }
 
+    async deleteBookingFor(bookingID, callback) {
+        let token = this.getToken();
+
+        if(token == null) {
+            return false;
+        }
+
+        const response = await fetch(this.server + "/api/booking/deletefor", {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "POST",
+            body: JSON.stringify({
+                "token": token,
+                "bookingID": bookingID
+            })
+        });
+
+        let data = await response.json();
+
+        if(callback != undefined && callback != null) {
+            callback(data);
+        }
+    }
+
     async deleteUser(userID, callback) {
         let token = this.getToken();
 
@@ -548,6 +573,33 @@ class ZAMAuth {
         }
 
         const response = await fetch(this.server + "/api/booking/edit", {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "POST",
+            body: JSON.stringify({
+                "token": token,
+                "bookingID": bookingID,
+                "start": start,
+                "end": end
+            })
+        });
+
+        let data = await response.json();
+
+        if(callback != undefined && callback != null) {
+            callback(data);
+        }
+    }
+
+    async editBookingFor(bookingID, start, end, callback) {
+        let token = this.getToken();
+
+        if(token == null) {
+            return false;
+        }
+
+        const response = await fetch(this.server + "/api/booking/editfor", {
             headers: {
                 "Content-Type": "application/json"
             },
@@ -607,6 +659,30 @@ class ZAMAuth {
             body: JSON.stringify({
                 "token": token,
                 "assetID": assetID
+            })
+        });
+
+        let data = await response.json();
+
+        if(callback != undefined && callback != null) {
+            callback(data);
+        }
+    }
+
+    async getCoordinatedUsers(callback) {
+        let token = this.getToken();
+
+        if(token == null) {
+            return false;
+        }
+
+        const response = await fetch(this.server + "/api/user/coord", {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "POST",
+            body: JSON.stringify({
+                "token": token,
             })
         });
 
